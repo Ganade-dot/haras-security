@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haras Security | Protection contre la fraude et cybersécurité</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0A1628;
+            --primary-blue: #1E40AF;
+            --accent-red: #DC2626;
+            --accent-cyan: #06B6D4;
+            --text-light: #F8FAFC;
+            --text-gray: #94A3B8;
+            --background: #0F172A;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-light);
+            background: var(--background);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background effect */
+        .background-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(30, 64, 175, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(30, 64, 175, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(30, 64, 175, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '🔒';
+            font-size: 1.6rem;
+            -webkit-text-fill-color: initial;
+            background: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-cyan);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--text-light);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 5% 6rem;
+            text-align: left;
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 30px;
+            color: var(--accent-red);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--primary-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-cyan) 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(30, 64, 175, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid rgba(248, 250, 252, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(248, 250, 252, 0.05);
+            border-color: rgba(248, 250, 252, 0.4);
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .stat-item {
+            padding: 2rem;
+            background: rgba(30, 64, 175, 0.05);
+            border: 1px solid rgba(30, 64, 175, 0.2);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            background: rgba(30, 64, 175, 0.1);
+            border-color: var(--accent-cyan);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 8rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-tag {
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            padding: 3rem 2.5rem;
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(6, 182, 212, 0.02) 100%);
+            border: 1px solid rgba(30, 64, 175, 0.2);
+            border-radius: 16px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-cyan));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border-color: var(--accent-cyan);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(30, 64, 175, 0.2);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .service-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .service-card li {
+            color: var(--text-gray);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .service-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        /* Threat Section */
+        .threats {
+            padding: 8rem 5%;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.03) 0%, rgba(30, 64, 175, 0.03) 100%);
+            border-top: 1px solid rgba(30, 64, 175, 0.2);
+            border-bottom: 1px solid rgba(30, 64, 175, 0.2);
+        }
+
+        .threats-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .threats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .threat-item {
+            padding: 2rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .threat-item:hover {
+            border-color: var(--accent-red);
+            background: rgba(15, 23, 42, 0.8);
+            transform: translateX(5px);
+        }
+
+        .threat-item h4 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--accent-red);
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .threat-item p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 5%;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Contact Form */
+        .contact {
+            padding: 8rem 5%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        input, textarea, select {
+            padding: 1rem;
+            background: rgba(30, 64, 175, 0.05);
+            border: 1px solid rgba(30, 64, 175, 0.2);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            background: rgba(30, 64, 175, 0.08);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 5%;
+            background: var(--primary-dark);
+            border-top: 1px solid rgba(30, 64, 175, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .footer-about h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-about p {
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        .footer-links h4 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .footer-contact {
+            color: var(--text-gray);
+        }
+
+        .footer-contact h4 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .footer-contact p {
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-contact a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-contact a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(30, 64, 175, 0.2);
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .hero {
+                padding: 5rem 5% 4rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-grid"></div>
+    
+    <div class="content-wrapper">
+        <header>
+            <div class="logo">HARAS SECURITY</div>
+            <nav>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#menaces">Menaces</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="hero-badge">🛡️ Protection contre la fraude</div>
+            <h1>Protégez votre entreprise<br>contre <span>la cyberfraude</span></h1>
+            <p>Expert en formation et sensibilisation à la cybersécurité. Nous formons les entreprises, particuliers et universités aux menaces modernes : phishing, vishing, spoofing et ingénierie sociale.</p>
+            
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Demander une formation</a>
+                <a href="#services" class="btn btn-secondary">Découvrir nos services</a>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Des cyberattaques commencent par du phishing</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4,7M€</div>
+                    <div class="stat-label">Coût moyen d'une violation de données</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Surveillance et prévention continues</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services" id="services">
+            <div class="section-header">
+                <div class="section-tag">Nos Services</div>
+                <h2>Une expertise complète en cybersécurité</h2>
+                <p>Des formations pratiques et personnalisées pour tous les publics</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🎓</div>
+                    <h3>Formation Entreprises</h3>
+                    <p>Programmes de sensibilisation adaptés à votre secteur d'activité pour protéger vos équipes contre les attaques ciblées.</p>
+                    <ul>
+                        <li>Ateliers pratiques en présentiel</li>
+                        <li>Simulations d'attaques réelles</li>
+                        <li>Supports pédagogiques personnalisés</li>
+                        <li>Suivi et évaluation des compétences</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">👥</div>
+                    <h3>Formation Particuliers</h3>
+                    <p>Protégez votre identité numérique et vos données personnelles contre les arnaques du quotidien.</p>
+                    <ul>
+                        <li>Reconnaissance des tentatives de fraude</li>
+                        <li>Sécurisation des comptes en ligne</li>
+                        <li>Protection des données bancaires</li>
+                        <li>Bonnes pratiques numériques</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🔐</div>
+                    <h3>Cybersécurité Avancée</h3>
+                    <p>Maîtrisez les techniques d'attaque pour mieux vous défendre contre le vishing, spoofing et social engineering.</p>
+                    <ul>
+                        <li>Détection du phishing sophistiqué</li>
+                        <li>Protection contre le vishing</li>
+                        <li>Identification du spoofing</li>
+                        <li>Contre-mesures d'ingénierie sociale</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🏛️</div>
+                    <h3>Formation Universitaire</h3>
+                    <p>Modules pédagogiques pour les étudiants et futurs professionnels de la cybersécurité.</p>
+                    <ul>
+                        <li>Cours théoriques et pratiques</li>
+                        <li>Cas d'études réels</li>
+                        <li>Certifications reconnues</li>
+                        <li>Préparation aux métiers de la cyber</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="threats" id="menaces">
+            <div class="threats-container">
+                <div class="section-header">
+                    <div class="section-tag">Menaces Actuelles</div>
+                    <h2>Les cybermenaces que nous combattons</h2>
+                    <p>Comprendre les attaques pour mieux s'en protéger</p>
+                </div>
+
+                <div class="threats-grid">
+                    <div class="threat-item">
+                        <h4>🎣 Phishing</h4>
+                        <p>Emails frauduleux imitant des organisations légitimes pour voler des identifiants et données sensibles.</p>
+                    </div>
+
+                    <div class="threat-item">
+                        <h4>📞 Vishing</h4>
+                        <p>Fraude téléphonique (voice phishing) où les attaquants se font passer pour des conseillers bancaires ou services publics.</p>
+                    </div>
+
+                    <div class="threat-item">
+                        <h4>👤 Spoofing</h4>
+                        <p>Usurpation d'identité numérique : falsification d'adresses email, numéros de téléphone ou sites web.</p>
+                    </div>
+
+                    <div class="threat-item">
+                        <h4>🎭 Ingénierie Sociale</h4>
+                        <p>Manipulation psychologique pour obtenir des informations confidentielles ou accès à des systèmes.</p>
+                    </div>
+
+                    <div class="threat-item">
+                        <h4>💼 Business Email Compromise</h4>
+                        <p>Compromission de messagerie professionnelle pour détourner des paiements ou voler des données stratégiques.</p>
+                    </div>
+
+                    <div class="threat-item">
+                        <h4>🔗 Smishing</h4>
+                        <p>Phishing par SMS avec liens malveillants vers de faux sites de banques, administrations ou services de livraison.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Prêt à renforcer votre sécurité ?</h2>
+                <p>Contactez-nous pour une consultation gratuite et découvrez comment nous pouvons protéger votre organisation contre la cyberfraude.</p>
+                <a href="#contact" class="btn btn-primary">Planifier une consultation</a>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="section-header">
+                <div class="section-tag">Contact</div>
+                <h2>Contactez-nous</h2>
+                <p>Demandez votre formation personnalisée</p>
+            </div>
+
+            <form>
+                <div class="form-group">
+                    <label for="type">Type de demande *</label>
+                    <select id="type" required>
+                        <option value="">Sélectionnez...</option>
+                        <option value="entreprise">Formation Entreprise</option>
+                        <option value="particulier">Formation Particulier</option>
+                        <option value="universite">Formation Universitaire</option>
+                        <option value="audit">Audit de sécurité</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="nom">Nom complet *</label>
+                    <input type="text" id="nom" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="telephone">Téléphone</label>
+                    <input type="tel" id="telephone">
+                </div>
+
+                <div class="form-group">
+                    <label for="entreprise">Entreprise / Organisation</label>
+                    <input type="text" id="entreprise">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" required placeholder="Décrivez vos besoins en formation ou vos préoccupations en matière de sécurité..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Envoyer la demande</button>
+            </form>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>HARAS SECURITY</h3>
+                    <p>Expert en formation et sensibilisation à la cybersécurité. Nous protégeons les entreprises, particuliers et universités contre les menaces numériques modernes.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Formation Entreprises</a></li>
+                        <li><a href="#services">Formation Particuliers</a></li>
+                        <li><a href="#services">Cybersécurité</a></li>
+                        <li><a href="#services">Formation Universitaire</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Informations</h4>
+                    <ul>
+                        <li><a href="#menaces">Menaces</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#">Mentions légales</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Haras Security. Tous droits réservés.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission handling
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Merci pour votre demande ! Nous vous contacterons rapidement.');
+            this.reset();
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card, .threat-item, .stat-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
